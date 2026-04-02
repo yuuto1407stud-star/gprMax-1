@@ -12,7 +12,7 @@ import math
 input_file = "my_model/test.in"
 base_name = "my_model/test"
 n_steps = 541
-er = 6.2           # 比誘電率
+er = 6          # 比誘電率
 t_max = 6e-9       # タイムウィンドウ
 start_x = 0.05     # 測定開始位置 (m)
 step_size = 0.0025 # 掃引ピッチ (m)
@@ -31,6 +31,12 @@ os.makedirs(out_dir, exist_ok=True)
 # -gpu オプションを追加して高速化
 print("🚀 シミュレーション開始 (GPU使用)...")
 subprocess.run(f"python -m gprMax {input_file} -n {n_steps} -gpu", shell=True)
+
+# --- 【追加】ここを付け足してください ---
+print("🏗️ ジオメトリ(VTI)を生成中...")
+# 計算はせずに、モデルの形状（VTI）だけを書き出す命令
+subprocess.run(f"python -m gprMax {input_file} -geometry-only", shell=True)
+# ------------------------------------
 
 # ===== ④ データの結合と抽出 =====
 print("🔗 データを結合中...")
